@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - BouncyPlatform
+  - coin
+  - coinDash
+  - coinJump
+  - coinWallClimb
+  - Enemy1
+  - ground
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - ground
+  - bouncy ground
+  - coin
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: front
+    uniqueID: 3361726921
+    locked: 0
+  - name: Background
+    uniqueID: 1636907591
+    locked: 0
+  - name: Ground
+    uniqueID: 1296041251
+    locked: 0
+  - name: player
+    uniqueID: 4039039559
+    locked: 0
+  - name: Ground Objects
+    uniqueID: 1335265651
+    locked: 0
+  - name: New Layer 6
+    uniqueID: 1438062843
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0

@@ -5,6 +5,8 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
+    public static EnemyAI Instance;
+
     public Transform target;
 
     public float speed = 200f;
@@ -32,12 +34,22 @@ public class EnemyAI : MonoBehaviour
         InvokeRepeating("UpdatePath", 0f, 1f);
     }
 
+    // Check if the target (player) is alive
+    private bool isTargetAlive()
+    {
+        if (target == null)
+            return false;
+
+        PlayerHealth playerHealth = target.GetComponent<PlayerHealth>();
+        return playerHealth != null && playerHealth.health > 0;
+    }
+
     void UpdatePath()
     {
-        if (seeker.IsDone())
-        seeker.StartPath(rb.position, target.position, OnPathComplete);
+        // Only try to calculate a path if the target is alive
+        if (target != null && seeker.IsDone() && isTargetAlive())
+            seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
-    
 
     void OnPathComplete(Path p)
     {
@@ -51,15 +63,16 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (path == null)   
+        // Stop AI if the player is dead or target is null
+        if (path == null || !isTargetAlive() || target == null)
             return;
-        
 
-        if(currentWaypoint >= path.vectorPath.Count)
+        if (currentWaypoint >= path.vectorPath.Count)
         {
             reachedEndOfPath = true;
             return;
-        } else
+        }
+        else
         {
             reachedEndOfPath = false;
         }
@@ -86,3 +99,4 @@ public class EnemyAI : MonoBehaviour
         }
     }
 }
+

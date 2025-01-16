@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    public bool stopFollowingPlayer = false;  // Flag to stop camera from following
+
+
     public Transform player; // Reference to the player's transform
     public float smoothSpeed = 0.125f; // The smooth speed (delay effect)
     public Vector3 offset; // Offset of the camera from the player position
 
     private void FixedUpdate()
     {
+        if (stopFollowingPlayer) return; // Exit if camera should stop following
+
         // Target position of the camera with the offset
         Vector3 targetPosition = player.position + offset;
 
@@ -22,4 +27,5 @@ public class CameraFollow : MonoBehaviour
         // Update the camera's position
         transform.position = smoothedPosition;
     }
+
 }

@@ -13,8 +13,10 @@ GameObject:
   - component: {fileID: 1275101149496948233}
   - component: {fileID: 5328532246590015328}
   - component: {fileID: 3857499806116620900}
-  m_Layer: 0
-  m_Name: Enemy (1)
+  - component: {fileID: -2537245404059444702}
+  - component: {fileID: 7236121701385073857}
+  m_Layer: 10
+  m_Name: Enemy (3)
   m_TagString: Enemy1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1187450051251765124}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 65.6, y: 6.96, z: 0}
+  m_LocalPosition: {x: 50.897404, y: 10.419712, z: 0.11824979}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -66,7 +68,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -85,7 +87,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 400
+  speed: 40000
   nextWaypointDistance: 1
   EnemyGFX: {fileID: 7721343596377232669}
 --- !u!114 &5328532246590015328
@@ -128,7 +130,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 20
   m_LinearDrag: 1.5
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -142,7 +144,33 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!114 &-2537245404059444702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187450051251765124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 975c533f4213a6a40ad42381ff642c8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+--- !u!114 &7236121701385073857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187450051251765124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c0336ca30470c849a18c90cf75681dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
 --- !u!1 &2046958409871460478
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,7 +181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7721343596377232669}
   - component: {fileID: 3816201936610722153}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy look
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +223,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -238,7 +266,7 @@ GameObject:
   - component: {fileID: 8835895546956603996}
   - component: {fileID: 7203805165120625835}
   - component: {fileID: 6628271502548045809}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,6 +11,11 @@ TagManager:
   - coinWallClimb
   - Enemy1
   - ground
+  - coinAttack
+  - coinTime
+  - coinHealth
+  - EnemyHitbox
+  - coinEnd
   layers:
   - Default
   - TransparentFX
@@ -21,8 +26,8 @@ TagManager:
   - ground
   - bouncy ground
   - coin
-  - 
-  - 
+  - UI Back
+  - enemylayer
   - 
   - 
   - 

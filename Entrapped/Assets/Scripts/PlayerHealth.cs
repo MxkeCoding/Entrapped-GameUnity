@@ -117,44 +117,7 @@ public class PlayerHealth : MonoBehaviour
             gameOverScreen.SetActive(true);
         }
 
-        // Call the GameOver method in UIManager
-        if (uiManager != null)
-        {
-            uiManager.GameOver();  // This calls the GameOver method you have in UIManager
-        }
-
-        // Allow UI buttons to work by enabling the UIManager script
-        if (uiManager != null)
-        {
-            uiManager.enabled = true;  // Enable UIManager to handle UI actions (buttons)
-        }
-
-        // Disable player input
-        if (playerScript != null)
-        {
-            playerScript.DisablePlayerInput();
-        }
-
-        // Stop the stopwatch via UIManager (not Timer)
-        if (uiManager != null)
-        {
-            uiManager.StopStopwatch(); // Call the method to stop the stopwatch from UIManager
-        }
-
-        // Play the death sound from the Player script (above music)
-        if (playerScript != null)
-        {
-            playerScript.PlayDeathSound();  // Call PlayDeathSound() method in Player script
-        }
-
-        // Disable the player object instead of destroying it
-        gameObject.SetActive(false);  // This disables the player without destroying it
-
-        // Play the Game Over music from UIManager
-        if (uiManager != null && uiManager.gameOverMusicClip != null)
-        {
-            uiManager.PlayBackgroundMusic(uiManager.gameOverMusicClip);  // Use the gameOverMusicClip from UIManager
-        }
+        UIManager.Instance.GameOver();
     }
 
 

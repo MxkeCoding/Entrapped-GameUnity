@@ -35,8 +35,8 @@ public class Player : MonoBehaviour
     private bool isGrounded;
     private bool isJumping;
     private float jumpTimer;
-    public int maxJumps = 2;
-    private int jumpCount;
+    public int maxJumps = 1;
+    public int jumpCount;
 
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
@@ -60,6 +60,8 @@ public class Player : MonoBehaviour
     public float wallCheckDistance = 0.5f;
     public LayerMask wallLayer;
     public float wallClimbSpeed = 5f;
+    public bool canWallClimb = false; 
+
 
     // Wall climbing state
     private bool isTouchingLeftWall;
@@ -209,6 +211,7 @@ public class Player : MonoBehaviour
         {
             // Trigger the GameOver method in UIManager
             UIManager.Instance.GameOver();
+
         }
     }
 
@@ -362,6 +365,30 @@ public class Player : MonoBehaviour
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxVelocity);
     }
 
+    private void HandleWallClimbInput()
+    {
+        // Allow climbing only if the player has unlocked the ability
+        if (!canWallClimb) return;
+
+        // Check if the player is touching a wall and allow climbing if the jump button is pressed
+        if ((isTouchingLeftWall || isTouchingRightWall) && !isGrounded)
+        {
+            if (jumpAction.triggered)
+            {
+                isWallClimbing = true;
+                rb.velocity = new Vector2(rb.velocity.x, wallClimbSpeed); // Set the climbing speed
+            }
+            else if (!jumpAction.IsPressed())
+            {
+                isWallClimbing = false; // Stop climbing when jump button is released
+            }
+        }
+        else
+        {
+            isWallClimbing = false; // Stop climbing when not touching a wall
+        }
+    }
+
     private void HandleJumpInput()
     {
         if (jumpAction.triggered && jumpCount < maxJumps)
@@ -381,38 +408,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    
 
 
-    private void HandleWallClimbInput()
-    {
-        // Check if the player is touching a wall and allow climbing if the jump button is pressed
-        if ((isTouchingLeftWall || isTouchingRightWall) && !isGrounded)
-        {
-            // If the jump action is triggered and the player is touching a wall, initiate wall climbing
-            if (jumpAction.triggered)
-            {
-                isWallClimbing = true;
-                rb.velocity = new Vector2(rb.velocity.x, wallClimbSpeed);  // Set the climbing speed
-            }
-            else if (!jumpAction.IsPressed()) // Stop climbing if jump button is released
-            {
-                isWallClimbing = false;
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);  // Maintain current vertical velocity
-            }
-        }
-        else
-        {
-            isWallClimbing = false;  // Stop climbing when not touching a wall
-        }
-    }
+
+
 
     private void StartJump()
     {
         isJumping = true;
         jumpTimer = 0f;
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        jumpCount++;
+        
         UpdateAnimator();
     }
 
@@ -516,10 +522,10 @@ public class Player : MonoBehaviour
 
     public void GrantWallClimbAbility()
     {
-        // Increase wall check distance for better wall climbing
-        wallCheckDistance += 0.008f;
+        canWallClimb = true; // Enable wall climbing ability
         Debug.Log("Wall climb power-up granted!");
     }
+
 
     private void GrantAttackAbility()
     {
@@ -549,7 +555,7 @@ public class Player : MonoBehaviour
         }
         else if (other.CompareTag("coinWallClimb"))
         {
-            GrantWallClimbAbility(); // Grant Wall Climb ability
+            GrantWallClimbAbility(); // Enable the wall climb ability
             Destroy(other.gameObject); // Destroy the coin
         }
         else if (other.CompareTag("coinAttack"))
@@ -570,11 +576,18 @@ public class Player : MonoBehaviour
         }
 
         // Check if the player reaches the end (e.g., finish line or special zone)
-        if (other.CompareTag("coinEnd"))
+        else if (other.CompareTag("coinEnd"))
         {
             finalTime = Time.time - startTime; // Calculate the final time when the player reaches the end zone
             UIManager.Instance.ShowEndScreen(finalTime); // Pass the final time to the ShowEndScreen method
             Debug.Log("Player reached the end zone!");
+        }
+
+        // Check if the player reaches the start (e.g., finish line or special zone)
+        else if (other.CompareTag("coinStart"))
+        {
+            UIManager.Instance.StartGameCoin();
+            Debug.Log("Player reached the start zone!");
         }
     }
 

@@ -151,6 +151,14 @@ public class UIManager : MonoBehaviour
         PlayerPrefs.Save(); // Make sure it's saved
     }
 
+    public void StartGameCoin()
+    {
+        // Start the stopwatch
+        StartStopwatch();
+
+        // Play the start game music
+        PlayBackgroundMusic(startGameMusicClip);
+    }
 
     // Start the game and set up the relevant game states
     public void StartGame()
@@ -168,11 +176,7 @@ public class UIManager : MonoBehaviour
         // Reset Time.timeScale
         Time.timeScale = 1f;
 
-        // Start the stopwatch
-        StartStopwatch();
-
-        // Play the start game music
-        PlayBackgroundMusic(startGameMusicClip);
+        
 
         // Enable the light2D GameObject
         if (light2D != null)
@@ -262,8 +266,30 @@ public class UIManager : MonoBehaviour
             HealthBar.SetActive(false);  // Disable the HealthBar GameObject
         }
 
+        // Disable the Player's SpriteRenderer
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        if (playerObject != null)
+        {
+            SpriteRenderer playerSprite = playerObject.GetComponent<SpriteRenderer>();
+            if (playerSprite != null)
+            {
+                playerSprite.enabled = false; // Turn off the sprite renderer
+            }
+            else
+            {
+                Debug.LogWarning("SpriteRenderer not found on Player.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Player object not found.");
+        }
+
+        // Freeze the game
+        Time.timeScale = 0f; // Stop the game
+
         // Optional: Play a death sound
-        if (Player.Instance.audioSource != null)
+        if (Player.Instance != null && Player.Instance.audioSource != null)
         {
             Player.Instance.audioSource.Play();
         }
